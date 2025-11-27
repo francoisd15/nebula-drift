@@ -125,7 +125,7 @@ All enhancements use **zero-cost procedural generation** with Pygame primitives.
 
 ### File Structure
 ```
-spaceship_animation/
+nebula-drift/
 ├── main.py              # Main game loop (integrated effects)
 ├── config.py            # Color palette, constants
 ├── visuals/

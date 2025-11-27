@@ -1,6 +1,6 @@
-# Petit Vaisseau Spatial dans l'Espace
+# Nebula Drift
 
-Un petit projet d'animation Python présentant un vaisseau spatial naviguant dans l'espace.
+Un petit projet d'animation Python présentant un vaisseau spatial naviguant dans une nébuleuse procédurale, avec étoiles parallaxe et effets de particules.
 
 ## Description
 
