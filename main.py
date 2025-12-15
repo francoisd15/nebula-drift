@@ -586,10 +586,10 @@ class WaveManager:
     def draw(self, surf):
         for e in self.enemies:
             e.draw(surf)
-        # wave small text
+        # wave small text - positioned below score display
         font = pygame.font.SysFont(None, 24)
         img = font.render(f"Wave {self.wave}", True, WHITE)
-        surf.blit(img, (10, 10))
+        surf.blit(img, (10, 50))
         # announcement overlay (animated)
         if self.announce_timer > 0:
             hud.draw_wave_announcement(surf, self.wave, self.announce_timer, WIDTH, HEIGHT)
@@ -813,13 +813,18 @@ while running:
         ex.draw(render_surf)
 
     waves.draw(render_surf)
+    
+    for pu in powerups:
+        pu.draw(render_surf)
+    
     player.draw(render_surf)
 
     # HUD (graphical)
-    hud.draw_health_bar(render_surf, 10, HEIGHT - 60, player.health, 100, width=180, height=16, bar_type='health')
-    hud.draw_health_bar(render_surf, 10, HEIGHT - 38, player.shield, 50, width=180, height=12, bar_type='shield')
+    hud.draw_health_bar(render_surf, 10, HEIGHT - 60, player.health, 200, width=180, height=16, bar_type='health')
+    hud.draw_health_bar(render_surf, 10, HEIGHT - 38, player.shield, 100, width=180, height=12, bar_type='shield')
     hud.draw_weapon_indicator(render_surf, WIDTH - 4 * 50 - 20, HEIGHT - 56, player.weapons, player.active_weapon, size=40)
     hud.draw_combo_counter(render_surf, WIDTH // 2, 40, combo_mult, combo_timer, max_combo_time=180)
+    hud.draw_score(render_surf, 10, 10, score)
 
     # Overlay effects
     render_surf.blit(vignette_overlay, (0, 0))
@@ -840,11 +845,18 @@ while running:
         screen.blit(overlay, (0, 0))
         big = pygame.font.SysFont(None, 72)
         txt = big.render("GAME OVER", True, WHITE)
-        rect = txt.get_rect(center=(WIDTH//2, HEIGHT//2 - 20))
+        rect = txt.get_rect(center=(WIDTH//2, HEIGHT//2 - 40))
         screen.blit(txt, rect)
+        
+        # Display final score
+        score_font = pygame.font.SysFont(None, 36)
+        score_txt = score_font.render(f"Final Score: {score}", True, WHITE)
+        score_rect = score_txt.get_rect(center=(WIDTH//2, HEIGHT//2 + 10))
+        screen.blit(score_txt, score_rect)
+        
         font = pygame.font.SysFont(None, 24)
         sub = font.render("Press R to restart or ESC to quit", True, WHITE)
-        screen.blit(sub, (WIDTH//2 - sub.get_width()//2, HEIGHT//2 + 30))
+        screen.blit(sub, (WIDTH//2 - sub.get_width()//2, HEIGHT//2 + 60))
 
     pygame.display.flip()
     clock.tick(FPS)
