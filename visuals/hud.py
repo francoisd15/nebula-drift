@@ -238,3 +238,30 @@ def draw_wave_announcement(surface, wave_number, timer, screen_width, screen_hei
     
     # Blit to screen
     surface.blit(text_surf, (0, int(screen_height // 3 + y_offset)))
+
+
+def draw_score(surface, x, y, score):
+    """
+    Draw the player's score.
+    
+    Args:
+        surface: pygame Surface to draw on
+        x, y: position for score display
+        score: current score value
+    """
+    # Background box for better visibility
+    font = pygame.font.SysFont(None, 32)
+    text = font.render(f"Score: {score}", True, (200, 200, 220))
+    
+    # Background with slight transparency
+    bg_padding = 8
+    bg_rect = pygame.Rect(x - bg_padding, y - bg_padding, text.get_width() + bg_padding * 2, text.get_height() + bg_padding * 2)
+    bg_surf = pygame.Surface((bg_rect.width, bg_rect.height), pygame.SRCALPHA)
+    bg_surf.fill((40, 40, 40, 180))
+    surface.blit(bg_surf, (bg_rect.x, bg_rect.y))
+    
+    # Border
+    pygame.draw.rect(surface, (80, 80, 80), bg_rect, 2)
+    
+    # Score text
+    surface.blit(text, (x, y))
