@@ -31,6 +31,11 @@ screen_shake = ScreenShake()
 hit_flash = HitFlash(WIDTH, HEIGHT)
 print("Visual systems ready!")
 
+# Initialize fonts (created once for performance)
+game_over_font = pygame.font.SysFont(None, 72)
+score_display_font = pygame.font.SysFont(None, 36)
+instruction_font = pygame.font.SysFont(None, 24)
+
 # -----------------------------
 # Utility
 # -----------------------------
@@ -571,6 +576,7 @@ class WaveManager:
         self.spawn_timer = 0
         self.enemies = []
         self.announce_timer = 0
+        self.wave_font = pygame.font.SysFont(None, 24)
 
     def update(self, player):
         # spawn next wave when clear
@@ -587,8 +593,7 @@ class WaveManager:
         for e in self.enemies:
             e.draw(surf)
         # wave small text - positioned below score display
-        font = pygame.font.SysFont(None, 24)
-        img = font.render(f"Wave {self.wave}", True, WHITE)
+        img = self.wave_font.render(f"Wave {self.wave}", True, WHITE)
         surf.blit(img, (10, 50))
         # announcement overlay (animated)
         if self.announce_timer > 0:
@@ -843,19 +848,16 @@ while running:
         overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         overlay.fill((0, 0, 0, 180))
         screen.blit(overlay, (0, 0))
-        big = pygame.font.SysFont(None, 72)
-        txt = big.render("GAME OVER", True, WHITE)
+        txt = game_over_font.render("GAME OVER", True, WHITE)
         rect = txt.get_rect(center=(WIDTH//2, HEIGHT//2 - 40))
         screen.blit(txt, rect)
         
         # Display final score
-        score_font = pygame.font.SysFont(None, 36)
-        score_txt = score_font.render(f"Final Score: {score}", True, WHITE)
+        score_txt = score_display_font.render(f"Final Score: {score}", True, WHITE)
         score_rect = score_txt.get_rect(center=(WIDTH//2, HEIGHT//2 + 10))
         screen.blit(score_txt, score_rect)
         
-        font = pygame.font.SysFont(None, 24)
-        sub = font.render("Press R to restart or ESC to quit", True, WHITE)
+        sub = instruction_font.render("Press R to restart or ESC to quit", True, WHITE)
         screen.blit(sub, (WIDTH//2 - sub.get_width()//2, HEIGHT//2 + 60))
 
     pygame.display.flip()

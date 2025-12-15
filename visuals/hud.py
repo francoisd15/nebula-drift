@@ -255,9 +255,7 @@ def draw_score(surface, x, y, score):
     
     # Background with slight transparency
     bg_padding = 8
-    bg_rect = pygame.Rect(x - bg_padding, y - bg_padding, 
-                          text.get_width() + bg_padding * 2, 
-                          text.get_height() + bg_padding * 2)
+    bg_rect = pygame.Rect(x - bg_padding, y - bg_padding, text.get_width() + bg_padding * 2, text.get_height() + bg_padding * 2)
     bg_surf = pygame.Surface((bg_rect.width, bg_rect.height), pygame.SRCALPHA)
     bg_surf.fill((40, 40, 40, 180))
     surface.blit(bg_surf, (bg_rect.x, bg_rect.y))
